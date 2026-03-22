@@ -1,9 +1,16 @@
 spring:
+  # configurar el perfil de desarrollo
+  profiles:
+    active: dev
   datasource:
     url: jdbc:mysql://localhost:3306/tunkbook_db
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+# configurar el puerto de localhost
+server:
+    port: 8080
 
 # sql: first_name->mybatis: firstName
 mybatis:

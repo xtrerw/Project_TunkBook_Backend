@@ -6,6 +6,21 @@ import java.util.List;
 
 public interface UserService {
 
-    //consultar todos los usuarios
+    /**
+     * consultar todos los usuarios
+     * @return todos los usuarios
+     */
     List<User> list();
+
+    /**
+     * usuario nuevo registrar
+     * @param user
+     */
+    void register(User user);
+
+    /**
+     * usuario login
+     * @param user
+     */
+    User login(User user);
 }
