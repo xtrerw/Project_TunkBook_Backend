@@ -17,13 +17,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-
-    @Override
-    public List<User> list() {
-
-        return userMapper.list();
-    }
-
     //necesita completar createTime y updateTime en usuarios
     @Override
     public void register(User user) {
@@ -35,22 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
-
-        switch (user.getTipoUsuario()) {
-            case "lector":
-                user.setTipoUsuario("reader");
-                return userMapper.getByReaderUsernameAndPassword(user);
-            case "autor":
-                user.setTipoUsuario("writer");
-                return userMapper.getByWriterUsernameAndPassword(user);
-            case "admin":
-                user.setTipoUsuario("admin");
-                return userMapper.getByAdminUsernameAndPassword(user);
-            default:
-                return null;
-        }
-
-        //return userMapper.getByUserNameAndPassword(user);
+        return userMapper.getByUserNameAndPassword(user);
 
     }
 }

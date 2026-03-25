@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Data
@@ -21,4 +22,7 @@ public class Categories {
     private LocalDateTime createTime;
     @DateTimeFormat(pattern = formatoDateTime)
     private LocalDateTime updateTime;
+    // mysql 1:n category:subcategory
+    private List<SubCategories> sb;
 }
+

@@ -24,14 +24,14 @@ public class UserController {
     //private static Logger log = LoggerFactory.getLogger(UserController.class);
 
     //@RequestMapping(value = "/users",method = RequestMethod.GET)//metodo de get
-    @GetMapping("/users")
-    public Result list(){
-        log.info("consulta los usuarios");
-        //muestrar usuario
-        List<User> userList=userService.list();
-        //devolver datos a front-end
-        return Result.success(userList);
-    }
+//    @GetMapping("/users")
+//    public Result list(){
+//        log.info("consulta los usuarios");
+//        //muestrar usuario
+//        List<User> userList=userService.list();
+//        //devolver datos a front-end
+//        return Result.success(userList);
+//    }
 
     /**
      * Registrar la usuario nueva
