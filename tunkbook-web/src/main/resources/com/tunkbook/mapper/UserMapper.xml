@@ -3,10 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tunkbook.mapper.UserMapper">
-    <insert id="insert" parameterType="com.tunkbook.pojo.User">
-       insert into user(username,password,last_name,first_name,email,phone,is_active,create_time,update_time) values (#{username},#{password},#{lastName},#{firstName},#{email},#{phone},#{isActive},#{createTime},#{updateTime})
-    </insert>
-
+    <!--select datos de autor,lector o administrador-->
     <select id="getByUserNameAndPassword" resultType="com.tunkbook.pojo.User">
         select users.id, users.username, users.password from users
             <!--switch-->

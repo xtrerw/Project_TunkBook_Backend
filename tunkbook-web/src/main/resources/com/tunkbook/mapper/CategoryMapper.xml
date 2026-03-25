@@ -4,8 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tunkbook.mapper.CategoryMapper">
     <select id="list" resultType="com.tunkbook.pojo.Categories" resultMap="categoryAndSubcategory">
-        select id, name, description from categories
-        left join subcategories on categories.id=subcategories.category_id
+        select c.id,
+               c.category_name,
+                sc.category_id,
+               sc.subcategory_name
+        from category c
+        left join subcategory sc on c.id=sc.category_id
     </select>
     
     <resultMap id="categoryAndSubcategory" type="com.tunkbook.pojo.Categories">
@@ -15,7 +19,7 @@
         
         <!--select sub categoria corresponde a categoria-->
         <collection property="sb" ofType="com.tunkbook.pojo.SubCategories">
-            <id property="categoryId" column="subcategory_id"/>
+            <id property="categoryId" column="category_id"/>
             <result property="subcategoryName" column="subcategory_name"/>
         </collection>
     </resultMap>
