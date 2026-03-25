@@ -18,8 +18,9 @@
         <result property="categoryName" column="category_name"/>
         
         <!--select sub categoria corresponde a categoria-->
-        <collection property="sb" ofType="com.tunkbook.pojo.SubCategories">
-            <id property="categoryId" column="category_id"/>
+        <collection property="subCategoriesList" ofType="com.tunkbook.pojo.SubCategories">
+            <id property="id" column="subcategory_id"/>
+            <result property="categoryId" column="category_id"/>
             <result property="subcategoryName" column="subcategory_name"/>
         </collection>
     </resultMap>

@@ -23,6 +23,6 @@ public class Categories {
     @DateTimeFormat(pattern = formatoDateTime)
     private LocalDateTime updateTime;
     // mysql 1:n category:subcategory
-    private List<SubCategories> sb;
+    private List<SubCategories> subCategoriesList;
 }
 
