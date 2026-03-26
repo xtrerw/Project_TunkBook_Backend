@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class JwtUtils {
     // generar clave
-    private static String secret="thisIsASecretKeyThatIsAtLeast32Bytes!";
+    private static String secret="tunkbook-generar-JWT-de-usuario-con-inicair-sesion-con-exito";
     private static long expiration=43200*1000;
     private static Key signKey=Keys.hmacShaKeyFor(secret.getBytes());
 
