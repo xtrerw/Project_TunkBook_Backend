@@ -3,12 +3,15 @@ package com.tunkbook.controller;
 import com.tunkbook.pojo.Result;
 import com.tunkbook.pojo.User;
 import com.tunkbook.service.UserService;
+import com.tunkbook.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 //controller->service->mapper->sql->service->controller->front-end
@@ -51,11 +54,27 @@ public class UserController {
      *
      */
     @PostMapping("/login")
-    public Result login(@RequestBody User user){
-        log.info("Iniciar sesión usuario");
+    public Result login(@RequestBody User user) throws Exception {
+        log.info("Iniciar sesión usuario"+ user);
         // verificar los usuarios
         User us= userService.login(user);
-        return us !=null? Result.success(us.getUsername()) : Result.error(0,"el nombre de usuario o contraseña no es correcto");
+
+        // generar JWT si iniciar sesion con exito
+        if (us !=null){
+            Map<String,Object> claims=new HashMap<>();
+            claims.put("id",user.getId());//user id
+            claims.put("name",user.getLastName());
+            claims.put("username",user.getUsername());// username
+            //inicair sesion con exito, les da jwt
+            try {
+                String token=JwtUtils.genJwt( claims);// generar JWT con información de usuario
+                return Result.success(token);
+            } catch (Exception e) {
+                throw new Exception(e);
+            }
+        }
+        // iniciar sesion fallo
+        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
     }
 
 }

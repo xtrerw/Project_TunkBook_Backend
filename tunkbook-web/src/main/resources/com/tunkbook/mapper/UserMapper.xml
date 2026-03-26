@@ -17,9 +17,7 @@
             <when test="tipoUsuario=='admin'">
                 inner join admins on users.id=admins.id
             </when>
-            <otherwise>
-                where 1=0
-            </otherwise>
         </choose>
+        where users.username=#{username} and users.password=#{password}
     </select>
 </mapper>
