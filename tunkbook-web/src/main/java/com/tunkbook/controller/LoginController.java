@@ -5,20 +5,17 @@ import com.tunkbook.pojo.User;
 import com.tunkbook.service.UserService;
 import com.tunkbook.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 //controller->service->mapper->sql->service->controller->front-end
 
 @Slf4j// usar log
 @RestController
-public class UserController {
+public class LoginController {
 
     //Inyección de dependencias de una interfaz
     @Autowired
@@ -53,28 +50,36 @@ public class UserController {
      * Iniciar sesion los usuarios
      *
      */
-    @PostMapping("/login")
-    public Result login(@RequestBody User user) throws Exception {
-        log.info("Iniciar sesión usuario"+ user);
-        // verificar los usuarios
-        User us= userService.login(user);
+    //使用spring security进行验证
+//    @PostMapping("/login")
+//    public Result login(@RequestBody User user) throws Exception {
+//        log.info("Iniciar sesión usuario"+ user);
+//        // verificar los usuarios
+//        User us= userService.login(user);
+//
+//        // generar JWT si iniciar sesion con exito
+//        if (us !=null){
+//            Map<String,Object> claims=new HashMap<>();
+//            claims.put("id",user.getId());//user id
+//            claims.put("name",user.getLastName());
+//            claims.put("username",user.getUsername());// username
+//            //inicair sesion con exito, les da jwt
+//            try {
+//                String token=JwtUtils.genJwt( claims);// generar JWT con información de usuario
+//                return Result.success(token);
+//            } catch (Exception e) {
+//                throw new Exception(e);
+//            }
+//        }
+//        // iniciar sesion fallo
+//        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
+//    }
 
-        // generar JWT si iniciar sesion con exito
-        if (us !=null){
-            Map<String,Object> claims=new HashMap<>();
-            claims.put("id",user.getId());//user id
-            claims.put("name",user.getLastName());
-            claims.put("username",user.getUsername());// username
-            //inicair sesion con exito, les da jwt
-            try {
-                String token=JwtUtils.genJwt( claims);// generar JWT con información de usuario
-                return Result.success(token);
-            } catch (Exception e) {
-                throw new Exception(e);
-            }
-        }
-        // iniciar sesion fallo
-        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
+    //login success
+    @PostMapping(path="/login-success",produces = "text/plain;charset=utf-8")
+    public String loginSuccess(){
+        return "iniciar sesion con exito";
     }
+
 
 }

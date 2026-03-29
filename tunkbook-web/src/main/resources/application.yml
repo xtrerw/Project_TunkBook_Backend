@@ -1,4 +1,10 @@
 spring:
+  # 设置视图层
+  mvc:
+    view:
+      prefix: "/WEB-INF/view"
+      suffix: "html"
+
   # configurar el perfil de desarrollo
   profiles:
     active: dev
@@ -12,6 +18,8 @@ spring:
 # configurar el puerto de localhost
 server:
     port: 8080
+    servlet:
+      context-path: /spring-boot-mybatis
 
 # sql: first_name->mybatis: firstName
 mybatis:

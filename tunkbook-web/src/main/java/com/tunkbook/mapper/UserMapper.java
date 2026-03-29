@@ -2,7 +2,6 @@ package com.tunkbook.mapper;
 
 
 import com.tunkbook.pojo.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -18,8 +17,17 @@ public interface UserMapper {
     /**
      * verificar los usuarios
      *
-     * @param user
+     * @param username
      * @return
      */
-    User getByUserNameAndPassword(User user);
+    @Select("select username,password from users where username=#{username}")
+    User getByUserName(String username);
+
+    /**
+     * 用户权限可能有多个，所以要用list
+     *
+     * @param userId
+     */
+    @Select("select role_name from roles r inner join users_roles ur on r.id=ur.role_id where ur.user_id=#{userId}")
+    List<String> getUserRolesById(Integer userId);
 }
