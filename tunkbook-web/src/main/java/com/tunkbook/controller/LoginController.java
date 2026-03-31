@@ -2,10 +2,17 @@ package com.tunkbook.controller;
 
 import com.tunkbook.pojo.Result;
 import com.tunkbook.pojo.User;
+import com.tunkbook.pojo.UserLogin;
 import com.tunkbook.service.UserService;
 import com.tunkbook.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -20,18 +27,8 @@ public class LoginController {
     //Inyección de dependencias de una interfaz
     @Autowired
     private UserService userService;
-
-    //private static Logger log = LoggerFactory.getLogger(UserController.class);
-
-    //@RequestMapping(value = "/users",method = RequestMethod.GET)//metodo de get
-//    @GetMapping("/users")
-//    public Result list(){
-//        log.info("consulta los usuarios");
-//        //muestrar usuario
-//        List<User> userList=userService.list();
-//        //devolver datos a front-end
-//        return Result.success(userList);
-//    }
+    @Autowired
+    private AuthenticationManager authManager;
 
     /**
      * Registrar la usuario nueva
@@ -50,30 +47,38 @@ public class LoginController {
      * Iniciar sesion los usuarios
      *
      */
-    //使用spring security进行验证
-//    @PostMapping("/login")
-//    public Result login(@RequestBody User user) throws Exception {
-//        log.info("Iniciar sesión usuario"+ user);
-//        // verificar los usuarios
-//        User us= userService.login(user);
-//
-//        // generar JWT si iniciar sesion con exito
-//        if (us !=null){
-//            Map<String,Object> claims=new HashMap<>();
-//            claims.put("id",user.getId());//user id
-//            claims.put("name",user.getLastName());
-//            claims.put("username",user.getUsername());// username
-//            //inicair sesion con exito, les da jwt
-//            try {
-//                String token=JwtUtils.genJwt( claims);// generar JWT con información de usuario
-//                return Result.success(token);
-//            } catch (Exception e) {
-//                throw new Exception(e);
-//            }
-//        }
-//        // iniciar sesion fallo
-//        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
-//    }
+    //使用spring security进行验证,jwt发放token令牌
+    @PostMapping("/login")
+    public Result login(@RequestBody User user) throws Exception {
+        log.info("Iniciar sesión usuario"+ user);
+        //调用loadUserByUsername verificar password, username, role
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        user.getUsername(), user.getPassword()
+                )
+        );
+        // conseguir userDetail,la información según la bbdd
+        //强转，拿到“登录成功后的用户信息” Spring Security 只认 UserDetails
+        UserLogin userLogin=(UserLogin) auth.getPrincipal();
+        User us=userLogin.getUser();
+        // generar JWT si iniciar sesion con exito
+        if (us !=null){
+            Map<String,Object> claims=new HashMap<>();
+            claims.put("id",us.getId());//user id
+            claims.put("name",us.getLastName());
+            claims.put("username",us.getUsername());// username
+            //inicair sesion con exito, les da jwt
+            try {
+                String token=JwtUtils.genJwt(claims);// generar JWT con información de usuario
+                claims.put("token",token);
+                return Result.success(claims);
+            } catch (Exception e) {
+                throw new Exception(e);
+            }
+        }
+        // iniciar sesion fallo
+        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
+    }
 
     //login success
     @PostMapping(path="/login-success",produces = "text/plain;charset=utf-8")

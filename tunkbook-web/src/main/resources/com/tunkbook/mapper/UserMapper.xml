@@ -20,4 +20,5 @@
 <!--        </choose>-->
 <!--        where users.username=#{username} and users.password=#{password}-->
 <!--    </select>-->
+    <insert id="insert"></insert>
 </mapper>

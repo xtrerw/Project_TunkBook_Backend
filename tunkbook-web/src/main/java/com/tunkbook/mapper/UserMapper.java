@@ -20,8 +20,8 @@ public interface UserMapper {
      * @param username
      * @return
      */
-    @Select("select username,password from users where username=#{username}")
-    User getByUserName(String username);
+    @Select("select id,last_name,username,password from users where username=#{username}")
+    User getByUsername(String username);
 
     /**
      * 用户权限可能有多个，所以要用list

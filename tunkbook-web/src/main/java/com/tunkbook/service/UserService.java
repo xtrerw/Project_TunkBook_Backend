@@ -13,9 +13,4 @@ public interface UserService {
      */
     void register(User user);
 
-    /**
-     * usuario login
-     * @param user
-     */
-//    User login(User user);
 }

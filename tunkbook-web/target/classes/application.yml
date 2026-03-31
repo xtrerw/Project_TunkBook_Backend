@@ -1,8 +1,9 @@
 spring:
-  mvc:
-    view:
-      prefix: "/WEB-INF/view"
-      suffix: "html"
+  # 设置视图层
+#  mvc:
+#    view:
+#      prefix: "/WEB-INF/view"
+#      suffix: "html"
 
   # configurar el perfil de desarrollo
   profiles:
@@ -17,8 +18,8 @@ spring:
 # configurar el puerto de localhost
 server:
     port: 8080
-    servlet:
-      context-path: /spring-boot-mybatis
+#    servlet:
+#      context-path: /spring-boot-mybatis
 
 # sql: first_name->mybatis: firstName
 mybatis:

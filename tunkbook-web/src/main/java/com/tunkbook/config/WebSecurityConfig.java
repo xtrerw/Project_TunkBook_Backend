@@ -3,6 +3,8 @@ package com.tunkbook.config;
 import com.tunkbook.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     // 用户角色权限认证
     //get start快速上手
+    //0.把 Spring Security 内部的 AuthenticationManager 暴露成一个 Bean，交给 Spring 容器管理
+    @Bean
+    public AuthenticationManager authManager(AuthenticationConfiguration authConfig){
+        return authConfig.getAuthenticationManager();
+    }
     //1.定义用户服务
 //    @Bean
 //    public UserDetailsService userDetailsService(){
@@ -41,27 +48,12 @@ public class WebSecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 //用户权限拦截设置
                 .authorizeHttpRequests(auth->
-                        auth.requestMatchers("/admin/**").hasRole("ADMIN")//匹配admin下的所有请求
-                                .requestMatchers("/lector/**").hasRole("LECTOR")//匹配lector下的所有请求
-                                .requestMatchers("/autor/**").hasRole("AUTOR")//匹配autor下的所有请求
-                                //匹配特定admin的权限
-                                .requestMatchers("/admin/director").hasAuthority("p1")//匹配主管的权限
-                                .requestMatchers("/admin/manager").hasAuthority("p2")//匹配经理的权限
-                                .requestMatchers("/admin/worker").hasAuthority("p3")//匹配员工的权限
+                        auth
                                 .requestMatchers("/login","/register").permitAll()//登录页面
-                                .anyRequest().authenticated()//其他请求都要验证登录
-
-                )
-                //表单登录
-                .formLogin(form->
-
-                        form
-//                                //自定义登录页面
-                                .loginPage("/login-view")
-                                .loginProcessingUrl("/login")
-                                //登录成功跳转登录成功页面
-                                .successForwardUrl("/login-success")
-                                .permitAll()
+                                    // 普通用户
+                                    .requestMatchers("/user/**").hasRole("USER")
+                                    .requestMatchers("/admin/**").hasRole("ADMIN")//匹配admin下的所有请求
+                                    .anyRequest().authenticated()//其他请求都要验证登录
                 );
         return http.build();
         //4./logout可以直接退出登录
