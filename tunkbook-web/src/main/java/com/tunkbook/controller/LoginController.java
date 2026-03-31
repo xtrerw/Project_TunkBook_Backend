@@ -50,7 +50,6 @@ public class LoginController {
     //使用spring security进行验证,jwt发放token令牌
     @PostMapping("/login")
     public Result login(@RequestBody User user) throws Exception {
-        log.info("Iniciar sesión usuario"+ user);
         //调用loadUserByUsername verificar password, username, role
         Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

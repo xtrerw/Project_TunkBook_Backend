@@ -16,11 +16,11 @@ import java.util.List;
 public class UserLogin implements UserDetails {
 
     private User user;
-    private Collection<? extends GrantedAuthority> auths;
+    private Collection<? extends GrantedAuthority> authorities;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return authorities;
     }
 
     @Override

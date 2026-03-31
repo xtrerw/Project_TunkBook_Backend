@@ -7,6 +7,8 @@ import com.tunkbook.pojo.UserLogin;
 import com.tunkbook.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -46,14 +48,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //角色查询
         List<String> roles=userMapper.getUserRolesById(user.getId());
         //比较用户信息和密码
-        UserDetails userDetails= org.springframework.security.core.userdetails.User
-                .withUsername(user.getUsername())
-                .password(
-                //之后要加password的加密
-                user.getPassword()
-        ).roles(roles.toArray(new String[0]))//把List变成String []
-                .build();
-//        return new UserLogin(user,List.of());
-        return userDetails;
+//        UserDetails userDetails= org.springframework.security.core.userdetails.User
+//                .withUsername(user.getUsername())
+//                .password(
+//                //之后要加password的加密
+//                user.getPassword()
+//        ).roles(roles.toArray(new String[0]))//把List变成String []
+//                .build();
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
+                .toList();
+
+        return new UserLogin(user,authorities);
     }
 }
