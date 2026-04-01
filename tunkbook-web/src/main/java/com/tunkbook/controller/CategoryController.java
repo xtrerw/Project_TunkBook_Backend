@@ -17,10 +17,10 @@ public class CategoryController {
     private CategoryService cs;
 
     @GetMapping("/categories")
-    public Result list(){
+    public Result listCategories(){
         log.info("muestrar las categorías");
 
-        List<Categories> categoriesList=cs.list();
+        List<Categories> categoriesList=cs.listCategories();
         return Result.success(categoriesList);
     }
 

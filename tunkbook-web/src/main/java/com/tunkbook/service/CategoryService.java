@@ -7,5 +7,5 @@ import java.util.List;
 public interface CategoryService {
 
     //MUESTRAR TODOS LOS CATEGORIAS
-    List<Categories> list();
+    List<Categories> listCategories();
 }

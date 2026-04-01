@@ -1,13 +1,12 @@
 package com.tunkbook.mapper;
 
-import com.tunkbook.pojo.Categories;
+import com.tunkbook.pojo.Books;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
-public interface CategoryMapper {
+public interface BookMapper {
 
-
-    List<Categories> list();
+    List<Books> listBooks(Integer id);
 }

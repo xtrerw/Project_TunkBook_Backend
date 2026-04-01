@@ -49,7 +49,7 @@ public class WebSecurityConfig {
                 //用户权限拦截设置
                 .authorizeHttpRequests(auth->
                         auth
-                                .requestMatchers("/login","/register").permitAll()//登录页面
+                                .requestMatchers("/login","/register","/categories/**").permitAll()//登录页面
                                     // 普通用户
                                     .requestMatchers("/user/**").hasRole("USER")
                                     .requestMatchers("/admin/**").hasRole("ADMIN")//匹配admin下的所有请求

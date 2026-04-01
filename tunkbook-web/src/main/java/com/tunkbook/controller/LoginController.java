@@ -3,16 +3,13 @@ package com.tunkbook.controller;
 import com.tunkbook.pojo.Result;
 import com.tunkbook.pojo.User;
 import com.tunkbook.pojo.UserLogin;
-import com.tunkbook.service.UserService;
+import com.tunkbook.service.LoginService;
 import com.tunkbook.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -26,7 +23,7 @@ public class LoginController {
 
     //Inyección de dependencias de una interfaz
     @Autowired
-    private UserService userService;
+    private LoginService loginService;
     @Autowired
     private AuthenticationManager authManager;
 
@@ -39,7 +36,7 @@ public class LoginController {
     public Result register(@RequestBody User user){
         log.info("Registrar la cuenta nueva:{}",user);
         //agregar usuario nuevo
-        userService.register(user);
+        loginService.register(user);
         return Result.success();
     }
 

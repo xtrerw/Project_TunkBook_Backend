@@ -6,6 +6,9 @@
     <select id="list" resultType="com.tunkbook.pojo.Categories" resultMap="categoryAndSubcategory">
         select c.id,
                c.category_name,
+               c.create_time,
+               c.update_time,
+               sc.id as sub_id,
                 sc.category_id,
                sc.subcategory_name
         from category c
@@ -16,10 +19,12 @@
         <!--select nombre de categorias-->
         <id property="id" column="id" />
         <result property="categoryName" column="category_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
         
         <!--select sub categoria corresponde a categoria-->
         <collection property="subCategoriesList" ofType="com.tunkbook.pojo.SubCategories">
-            <id property="id" column="subcategory_id"/>
+            <id property="id" column="sub_id"/>
             <result property="categoryId" column="category_id"/>
             <result property="subcategoryName" column="subcategory_name"/>
         </collection>
