@@ -25,10 +25,5 @@ public class BookController {
         List<Books> booksList=bookService.listBooks(id);
         return Result.success(booksList);
     }
-    // agregar libro nuevo
-    @PostMapping("/books")
-    public Result addBook(Books book){
-        log.info("agregar los libros");
-        return Result.success();
-    }
+
 }
