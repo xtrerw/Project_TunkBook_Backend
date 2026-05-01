@@ -1,6 +1,8 @@
 package com.tunkbook.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -16,8 +18,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @TableName("books")
 public class Books {
-    @TableId
+    @TableId(value = "id",type = IdType.AUTO)
     private Integer id;
+    @TableField(value = "book_name")
     private String bookName;
     private String cover;
     private Double price;
@@ -27,8 +30,4 @@ public class Books {
     private LocalDate createTime;
     @DateTimeFormat(pattern = formatoDate)
     private LocalDate updateTime;
-
-    private String biography;
-    private String firstName;
-    private String lastName;
 }

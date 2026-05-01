@@ -22,6 +22,13 @@ server:
 #      context-path: /spring-boot-mybatis
 
 # sql: first_name->mybatis: firstName
-mybatis:
+mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:com/tunkbook/mapper/*.xml
+  type-aliases-package: com.tunkbook.pojo
+
+logging:
+  level:
+    root: info

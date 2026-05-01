@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Project_TunkBook_Backend.iml" filepath="$PROJECT_DIR$/Project_TunkBook_Backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tunkbook-web/tunkbook-web.iml" filepath="$PROJECT_DIR$/tunkbook-web/tunkbook-web.iml" />
     </modules>
   </component>
 </project>
