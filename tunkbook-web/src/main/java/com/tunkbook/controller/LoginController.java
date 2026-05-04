@@ -41,24 +41,25 @@ public class LoginController {
      */
     //jwt发放token令牌
     @PostMapping("/login")
-    public Result login(@RequestBody User user) throws Exception {
-        User us=loginService.loginByUsernamePassword(user.getUsername(),user.getPassword());
-        // iniciar sesion con JWT
-        if (us !=null){
-            Map<String,Object> claims=new HashMap<>();
-            claims.put("id",us.getId());//user id
-            claims.put("name",us.getLastName());
-            claims.put("username",us.getUsername());// username
-            //inicair sesion con exito, les da token
-            try {
-                String token=JwtUtils.genJwt(claims);// generar JWT con información de usuario
-                claims.put("token",token);
+    public Result login(@RequestBody User user) {
+        try {
+            User us = loginService.loginByUsernamePassword(user.getUsername(), user.getPassword());
+            // iniciar sesion con JWT
+            if (us != null) {
+                Map<String, Object> claims = new HashMap<>();
+                claims.put("id", us.getId());//user id
+                claims.put("username", us.getUsername());// username
+                //inicair sesion con exito, les da token
+
+                String token = JwtUtils.genJwt(claims);// generar JWT con información de usuario
+                claims.put("token", token);
                 return Result.success(claims);
-            } catch (Exception e) {
-                throw new Exception(e);
             }
+        } catch (RuntimeException e) {
+            return Result.error(0, e.getMessage());
+        } catch (Exception e) {
+            return Result.error(0, "server error");
         }
-        // iniciar sesion fallo
-        return Result.error(0,"el nombre de usuario o contraseña no es correcto");
+        return null;
     }
 }

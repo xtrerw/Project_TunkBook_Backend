@@ -47,9 +47,16 @@ public class LoginServiceImpl implements LoginService {
                 new LambdaQueryWrapper<User>()
                         //condiciones de consulta
                 .eq(username!=null,User::getUsername,username)
-                        //password cifrado
-                .eq(password!=null,User::getPassword,passwordEncoder.encode(password))
         );
+
+        if (userLogin == null) {
+            throw new RuntimeException("Usuario o contraseña incorrectos");
+        }
+        //verificar password
+        if (!passwordEncoder.matches(password,userLogin.getPassword())) {
+            throw new RuntimeException("Usuario o contraseña incorrectos");
+        }
+
         return userLogin;
     }
 

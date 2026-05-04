@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
     //agregar role esrictor de usuario
-    @Insert("INSERT INTO users_roles (user_id, role_id) VALUES (#{id}, #{roleId})")
+    @Insert("INSERT INTO users_roles (user_id, role_id) VALUES (#{userId}, #{roleId})")
     void insertUserRole(Integer userId, Integer roleId);
 }
