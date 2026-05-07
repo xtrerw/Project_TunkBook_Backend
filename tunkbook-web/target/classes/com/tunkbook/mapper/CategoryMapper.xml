@@ -9,24 +9,26 @@
                c.create_time,
                c.update_time,
                sc.id as sub_id,
-                sc.category_id,
-               sc.subcategory_name
+               sc.category_id,
+               sc.subcategory_name,
+               sc.subcategory_img
         from category c
-        left join subcategory sc on c.id=sc.category_id
+                 left join subcategory sc on c.id=sc.category_id
     </select>
-    
+
     <resultMap id="categoryAndSubcategory" type="com.tunkbook.pojo.Categories">
         <!--select nombre de categorias-->
         <id property="id" column="id" />
         <result property="categoryName" column="category_name"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        
+
         <!--select sub categoria corresponde a categoria-->
         <collection property="subCategoriesList" ofType="com.tunkbook.pojo.SubCategories">
             <id property="id" column="sub_id"/>
             <result property="categoryId" column="category_id"/>
             <result property="subcategoryName" column="subcategory_name"/>
+            <result property="subcategoryImg" column="subcategory_img"/>
         </collection>
     </resultMap>
 </mapper>
