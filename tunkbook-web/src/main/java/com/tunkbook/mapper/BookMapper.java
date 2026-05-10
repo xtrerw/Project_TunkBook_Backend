@@ -11,8 +11,9 @@ import java.util.List;
 @Mapper
 public interface BookMapper extends BaseMapper<Books> {
 
-    List<Books> listBooks(@Param("id") Integer id);
 
     @Insert("INSERT INTO writers_books (user_id, book_id) VALUES (#{userId}, #{bookId})")
     void insertBookToUser(Integer bookId, Integer userId);
+
+    List<Books> listBooks(String categoriaName, String subcategoriaName);
 }

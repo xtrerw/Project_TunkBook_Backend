@@ -18,11 +18,11 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/categories/{id}")
-    public Result listBooks(@PathVariable Integer id){
-        log.info("musetra todos los libros según categorias id={}",id);
+    @GetMapping("/categories/{categoriaName}/{subcategoriaName}")
+    public Result listBooks(@PathVariable String categoriaName, @PathVariable String subcategoriaName){
+        log.info("muestra todos los libros según categoryName={} y subcategoriaName={}",categoriaName, subcategoriaName);
 
-        List<Books> booksList=bookService.listBooks(id);
+        List<Books> booksList=bookService.listBooks(categoriaName, subcategoriaName);
         return Result.success(booksList);
     }
 

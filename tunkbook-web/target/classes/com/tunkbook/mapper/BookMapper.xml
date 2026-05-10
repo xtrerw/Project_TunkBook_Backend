@@ -3,13 +3,35 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tunkbook.mapper.BookMapper">
-    <select id="listBooks" resultType="com.tunkbook.pojo.Books">
-        select b.id,book_name,cover,price,b.create_time,b.update_time,w.biography,us.first_name,us.last_name
+    <select id="listBooks" resultType="com.tunkbook.pojo.Books" resultMap="bookWithWriterResultMap">
+        select b.id,book_name,cover,price,b.create_time,b.update_time,
+               us.id as user_id, us.username,w.biography
         from books b
-                 join books_subcategories bsc on bsc.id_book=b.id
-                 join writers_books wb on wb.id_book=b.id
-                 join writer w on w.id_user=wb.id_writer
-                 join users us on us.id=w.id_user
-        where bsc.id_subcategory=#{id};
+                 join books_subcategories bsc on bsc.book_id=b.id
+                join subcategory sc on sc.id=bsc.subcategory_id
+                 join writers_books wb on wb.book_id=b.id
+                 join writer w on w.user_id=wb.user_id
+                 join users us on us.id=w.user_id
+        where sc.subcategory_name=#{subcategoriaName};
     </select>
+    <resultMap id="bookWithWriterResultMap" type="com.tunkbook.pojo.Books">
+        <!--Books-->
+        <id property="id" column="id"/>
+        <result property="bookName" column="book_name"/>
+        <result property="cover" column="cover"/>
+        <result property="price" column="price"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <!--Writers writersList-->
+        <collection property="writersList" ofType="com.tunkbook.pojo.Writers">
+            <id property="userId" column="user_id"/>
+            <result property="biography" column="biography"/>
+            <result property="income" column="income"/>
+            <!--User user -->
+            <association property="user" javaType="com.tunkbook.pojo.User">
+                <id property="id" column="user_id"/>
+                <result property="username" column="username"/>
+            </association>
+        </collection>
+    </resultMap>
 </mapper>

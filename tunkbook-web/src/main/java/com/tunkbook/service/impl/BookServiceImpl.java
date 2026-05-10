@@ -23,8 +23,8 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private RoleMapper roleMapper;
     @Override
-    public List<Books> listBooks(Integer id) {
-        return bookMapper.listBooks(id);
+    public List<Books> listBooks(String categoriaName, String subcategoriaName) {
+        return bookMapper.listBooks(categoriaName, subcategoriaName);
     }
 
     @Override

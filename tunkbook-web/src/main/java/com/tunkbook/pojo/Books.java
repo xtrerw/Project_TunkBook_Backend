@@ -12,6 +12,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +31,6 @@ public class Books {
     private LocalDate createTime;
     @DateTimeFormat(pattern = formatoDate)
     private LocalDate updateTime;
+    //autores de libros
+    private List<Writers> writersList;
 }
