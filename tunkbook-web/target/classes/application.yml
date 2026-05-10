@@ -22,7 +22,7 @@ server:
 #      context-path: /spring-boot-mybatis
 
 file:
-  upload-path: D:/2333/Project_TunkBook_Backend/tunkbook-web/uploads/img/
+  upload-path: D:/Project_TunkBook_Backend/tunkbook-web/uploads/img/
 # sql: first_name->mybatis: firstName
 mybatis-plus:
   configuration:
