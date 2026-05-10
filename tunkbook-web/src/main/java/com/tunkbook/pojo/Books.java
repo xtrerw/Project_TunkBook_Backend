@@ -23,6 +23,7 @@ public class Books {
     private Integer id;
     @TableField(value = "book_name")
     private String bookName;
+    private Integer stars;
     private String cover;
     private Double price;
 
@@ -33,4 +34,6 @@ public class Books {
     private LocalDate updateTime;
     //autores de libros
     private List<Writers> writersList;
+    //subcategorias de libros
+    private List<SubCategories> subCategoriesList;
 }
