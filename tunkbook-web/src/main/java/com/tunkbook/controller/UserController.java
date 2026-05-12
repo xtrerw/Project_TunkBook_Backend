@@ -6,10 +6,7 @@ import com.tunkbook.service.BookService;
 import com.tunkbook.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -35,7 +32,7 @@ public class UserController {
     }
 
     //muestra información de la usuario
-    @PostMapping("/users/{id}")
+    @PutMapping("/users/{id}")
     public Result listUserInfo(@PathVariable("id") Integer id) {
         log.info("muestra información de la usuario id={}", id);
         return Result.success(userService.listUserInfo(id));

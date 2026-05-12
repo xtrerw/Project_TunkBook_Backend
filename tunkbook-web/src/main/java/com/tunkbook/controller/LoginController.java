@@ -49,8 +49,11 @@ public class LoginController {
                 Map<String, Object> claims = new HashMap<>();
                 claims.put("id", us.getId());//user id
                 claims.put("username", us.getUsername());// username
-                //inicair sesion con exito, les da token
+                claims.put("imgPerfil", us.getImgPerfil());// imagen de perfil
+                claims.put("email", us.getEmail());//email
+                claims.put("dateBirth", us.getDateBirth().toString());//la fecha de nacimiento
 
+                //inicair sesion con exito, les da token
                 String token = JwtUtils.genJwt(claims);// generar JWT con información de usuario
                 claims.put("token", token);
                 return Result.success(claims);

@@ -25,6 +25,8 @@ public class User {
     private String email;
     @TableField("is_active")
     private Boolean isActive;
+    @TableField("image_perfil")
+    private String imgPerfil;
     private static final String formatoDateTime="yyyy-MM-dd HH:mm:ss";
 
     //fecha de nacimiento
