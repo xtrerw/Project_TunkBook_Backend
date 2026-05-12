@@ -34,4 +34,10 @@ public class UserController {
         return Result.success("agregar libro nuevo con éxito");
     }
 
+    //muestra información de la usuario
+    @PostMapping("/users/{id}")
+    public Result listUserInfo(@PathVariable("id") Integer id) {
+        log.info("muestra información de la usuario id={}", id);
+        return Result.success(userService.listUserInfo(id));
+    }
 }
