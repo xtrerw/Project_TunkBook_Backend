@@ -4,9 +4,14 @@ import com.tunkbook.pojo.Books;
 import com.tunkbook.pojo.Result;
 import com.tunkbook.service.BookService;
 import com.tunkbook.service.UserService;
+import com.tunkbook.utils.JwtUtils;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -31,10 +36,25 @@ public class UserController {
         return Result.success("agregar libro nuevo con éxito");
     }
 
-    //muestra información de la usuario
-    @PutMapping("/users/{id}")
-    public Result listUserInfo(@PathVariable("id") Integer id) {
-        log.info("muestra información de la usuario id={}", id);
-        return Result.success(userService.listUserInfo(id));
+    //mostrar información de la usuario
+    @GetMapping("/users/info")
+    public Result getUserInfo(HttpServletRequest req) {
+        try {
+            Cookie[] cookies = req.getCookies();
+            String token=null;
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals("Authorization")){
+                    log.info("token={}",cookie.getValue());
+                    token = cookie.getValue();
+                    break;
+                }
+            }
+            Map<String, Object> claims = JwtUtils.parseJwt(token);
+            Integer id = (Integer) claims.get("id");
+            log.info("user id={}",id);
+            return Result.success(userService.listUserInfo(id));
+        } catch (Exception e) {
+            return Result.error(0, "NOT LOGIN");
+        }
     }
 }
