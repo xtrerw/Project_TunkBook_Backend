@@ -2,6 +2,7 @@ package com.tunkbook.controller;
 
 import com.tunkbook.pojo.Books;
 import com.tunkbook.pojo.Result;
+import com.tunkbook.pojo.User;
 import com.tunkbook.service.BookService;
 import com.tunkbook.service.UserService;
 import com.tunkbook.utils.JwtUtils;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -40,6 +42,7 @@ public class UserController {
     @GetMapping("/users/info")
     public Result getUserInfo(HttpServletRequest req) {
         try {
+            //get cookie de Front-End
             Cookie[] cookies = req.getCookies();
             String token=null;
             for(Cookie cookie : cookies){
@@ -49,12 +52,25 @@ public class UserController {
                     break;
                 }
             }
+            // parse解析 token
             Map<String, Object> claims = JwtUtils.parseJwt(token);
+            //get id 强转 Integer
             Integer id = (Integer) claims.get("id");
             log.info("user id={}",id);
-            return Result.success(userService.listUserInfo(id));
+            // get List de infor
+            User us=userService.listUserInfo(id);
+            if (us!=null){
+                Map<String,Object> infoUser=new HashMap<>();
+                infoUser.put("username",us.getUsername());
+                infoUser.put("email",us.getEmail());
+                infoUser.put("dateBirth",us.getDateBirth());
+                infoUser.put("imgPerfil",us.getImgPerfil());
+                //devolver infoUser a Front-End
+                return Result.success(infoUser);
+            }
         } catch (Exception e) {
             return Result.error(0, "NOT LOGIN");
         }
+        return null;
     }
 }

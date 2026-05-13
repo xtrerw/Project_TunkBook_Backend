@@ -61,7 +61,7 @@ public class LoginController {
                 cookie.setMaxAge(43200);// time de cookie válido
                 response.addCookie(cookie);
                 //======== cookie ========
-                return Result.success(token);
+                return Result.success(claims);
             }
         } catch (RuntimeException e) {
             return Result.error(0, e.getMessage());
