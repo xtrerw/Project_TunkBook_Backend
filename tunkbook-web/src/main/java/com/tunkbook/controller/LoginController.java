@@ -3,6 +3,7 @@ package com.tunkbook.controller;
 import com.tunkbook.pojo.Result;
 import com.tunkbook.pojo.User;
 import com.tunkbook.service.LoginService;
+import com.tunkbook.utils.JwtCookieUtils;
 import com.tunkbook.utils.JwtUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -75,22 +76,8 @@ public class LoginController {
     @GetMapping("/auth/check")
     public Result checkAuth(HttpServletRequest req) {
         try {
-            //  get cookie
-            Cookie[] cookies = req.getCookies();
-            //  varificar cookie si existe
-            if (cookies==null) {
-                return Result.error(0, "NOT LOGIN");
-            }
-            //  buscar token en cookie
-            String token = null;
-            //  buscar "Authorization" cookie
-            for (Cookie cookie : cookies) {
-                //  si hay cookie "Authorization", obtener token
-                if (cookie.getName().equals("Authorization")) {
-                    token = cookie.getValue();
-                    break;
-                }
-            }
+            // get cookie con clase utils
+            String token= JwtCookieUtils.getToken(req);
             //  verificar si hay token existe
             if (token == null || token.isEmpty()) {
                 return Result.error(0, "NOT LOGIN");
@@ -102,5 +89,18 @@ public class LoginController {
         } catch (Exception e) {
             return Result.error(0, "NOT LOGIN");
         }
+    }
+
+    //logout
+    @PostMapping("/logout")
+    public Result logout(HttpServletResponse response){
+        //crear un cookie "Authorizaction" como antes
+        Cookie cookie=new Cookie("Authorization",null);
+        cookie.setMaxAge(0);// deja de caducida
+        cookie.setPath("/");//set ruta mimmo path como antes
+        cookie.setHttpOnly(true);
+
+        response.addCookie(cookie);
+        return Result.success("LOGOUT");
     }
 }
