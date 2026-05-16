@@ -23,7 +23,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String desc;
+    private String description;
     @TableField("is_active")
     private Boolean isActive;
     @TableField("image_perfil")
