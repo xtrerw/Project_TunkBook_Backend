@@ -47,7 +47,7 @@ public class LoginController {
     @PostMapping("/login")
     public Result login(@RequestBody User user,HttpServletResponse response) {
         try {
-            User us = loginService.loginByUsernamePassword(user.getUsername(), user.getPassword());
+            User us = loginService.loginByUsernamePassword(user.getEmail(), user.getPassword());
             // iniciar sesion con JWT
             if (us != null) {
                 Map<String, Object> claims = new HashMap<>();

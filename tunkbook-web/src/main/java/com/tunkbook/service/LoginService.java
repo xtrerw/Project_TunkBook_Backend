@@ -13,5 +13,5 @@ public interface LoginService {
      */
     void register(User user);
 
-    User loginByUsernamePassword(String username, String password);
+    User loginByUsernamePassword(String email, String password);
 }

@@ -40,13 +40,13 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public User loginByUsernamePassword(String username, String password) {
+    public User loginByUsernamePassword(String email, String password) {
         User userLogin=
         loginMapper.selectOne(
                 //crear obj de LambdaQueryWrapper
                 new LambdaQueryWrapper<User>()
                         //condiciones de consulta
-                .eq(username!=null,User::getUsername,username)
+                .eq(email!=null,User::getEmail,email)
         );
 
         if (userLogin == null) {
